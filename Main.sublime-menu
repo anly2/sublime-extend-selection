@@ -1,0 +1,14 @@
+[
+	{
+		"id": "selection",
+		"children": [
+			{
+				"id" : "extendSelectionCommand",
+				// "caption" : "Extend selection with next caret position",
+				// "caption" : "Add next caret position to selection",
+				"caption" : "Add next caret position",
+				"command" : "extend_selection"
+			}
+		]
+	}
+]
