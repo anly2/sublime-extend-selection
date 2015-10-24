@@ -27,6 +27,7 @@ The package is not yet approved by the "Package Control" team, so until then, th
 Manual installation should be as easy as cloning this git repository into your Sublime `Packages` directory. '(mind the version of sublime)'
 
 On Windows:
+
 	cd "%AppData%\Sublime Text 2\Packages"
 	git clone git://github.com/anly2/sublime-extend-selection.git ExtendSelection
 
