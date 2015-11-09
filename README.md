@@ -28,7 +28,8 @@ Then type `Extend Selection` and choose the ExtendSelection plugin from the drop
 
 ### Manual Installation
 
-Manual installation should be as easy as cloning this git repository into your Sublime `Packages` directory. '(mind the version of sublime)'
+Manual installation should be as easy as cloning this git repository into your Sublime `Packages` directory.  
+*(mind the version of sublime)*
 
 On Windows:
 
