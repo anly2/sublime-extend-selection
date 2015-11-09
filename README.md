@@ -22,7 +22,7 @@ For example, if I want to keep my current selection at `line 15, column 10` and 
 
 If you have the [PackageControl](http://wbond.net/sublime_packages/package_control) plugin installed, you can use that to install `ExtendSelection`.
 
-Just type `cmd-shift-p` (`ctrl-shift-p` on win/linux) to bring up the command pallate, then type `install` and pick `Package Control: Install Package` from the dropdown.
+Just type <kbd>cmd-shift-p</kbd> (<kbd>ctrl-shift-p</kbd> on win/linux) to bring up the command pallate, then type `install` and pick `Package Control: Install Package` from the dropdown.
 
 Then type `Extend Selection` and choose the ExtendSelection plugin from the dropdown.  Hit `enter` and it will install.
 
