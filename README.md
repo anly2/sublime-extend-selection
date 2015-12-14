@@ -21,11 +21,18 @@ For example, if I want to keep my current selection at `line 15, column 10` and 
 
 ### Combine 'one-move' change events
 
-	"combine_onemove_events": false
+	"combine_onemove_events": true
 
-The plugin can optionally try to handle drag-selections (mouse dragging). This, however, is achieved by combining new selections that are within one move from the recently-made new selection. It does work, but it means that it will also combine on other occasions, such as when using the arrow keys.  
+The plugin by default tries to handle drag-selections (mouse dragging). This is achieved by combining new selections that are within one move from the recently-made new selection. While this does work, it also means that further selections made using the arrow keys, for example, will also be 'combined' with the latest one.
 
-Because of this, the setting is set to `false` by default. If you choose to enable it, simply set it to `true`.
+**Example of when this may be unwanted**
+
+ >   selection at `row 10 column 2`
+ >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)
+ >   drag-select from `row 15 column 5` to `row 15 column 20`
+ >   <kbd>shift+right</kbd> **This will add to the last selection, instead of doing <kbd>shift+right</kbd> for EVERY selection**
+
+Please beware of this and disable the feature if that behaviour is undesired.
 
 
 ## Installation
