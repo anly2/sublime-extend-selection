@@ -40,7 +40,7 @@ Please beware of this and disable the feature if that behaviour is undesired.
 
 ### Install via PackageControl
 
-If you have the [PackageControl](http://wbond.net/sublime_packages/package_control) plugin installed, you can use that to install `EasyMotion`.
+If you have the [PackageControl](http://wbond.net/sublime_packages/package_control) plugin installed, you can use that to install `ExtendSelection`.
 
 Just type `cmd-shift-p` (`ctrl-shift-p` on win/linux) to bring up the command palette then type `install` and pick `Package Control: Install Package` from the dropdown.
 
