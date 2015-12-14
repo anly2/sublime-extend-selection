@@ -32,6 +32,28 @@
 
 	                        { "caption": "-" },
 
+
+	                        // Plugin Settings - Default
+	                        {
+	                            "caption": "Settings – Defualt",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/ExtendSelection/ExtendSelection.sublime-settings",
+	                            }
+	                        },
+
+	                        // Plugin Settings - User
+	                        {
+	                            "caption": "Settings – User",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/User/ExtendSelection.sublime-settings",
+	                            }
+	                        },
+
+	                        { "caption": "-" },
+
+
 	                        // Keybindings - Default
 	                        {
 	                            "caption": "Key Bindings – Default",
