@@ -130,6 +130,8 @@ class SelectionChangeListener(sublime_plugin.EventListener):
 
 			if STATE == "standby":
 				sel = view.sel();
+				for r in STORED_SELECTION:
+					sel.subtract(r);
 				s = sel[0];
 
 				if within1Move(s, LAST_SEL):
@@ -153,6 +155,9 @@ def within1Move(s1, s2):
 		return True;
 
 	global VIEW;
+
+	if (s1.size() == 0 and s2.size() == 0):
+		return False;
 
 	(s1y1,s1x1) = VIEW.rowcol(s1.begin());
 	(s1y2,s1x2) = VIEW.rowcol(s1.end());
