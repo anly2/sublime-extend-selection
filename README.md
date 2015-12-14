@@ -61,4 +61,9 @@ Or you can copy the files manually into a folder `\Packages\ExtendSelection`, if
 
 # Versions
 
-- 1.0.0 - released 24/10/15
+##### [1.1.1] - released 14/12/15
+###### Added:
+- a feature that handles drag-select
+
+##### [1.0.0] - released 24/10/15
+Initial release with basic functionality.
