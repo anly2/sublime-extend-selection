@@ -1,13 +1,11 @@
-import sublime, sublime_plugin
-
-#Constants
-STATUS_MESSAGE_ = None
+import sublime, sublime_plugin;
 
 #Global vars
-COMMAND_ACTIVE = False
+STATE = "inactive"
 VIEW_HAS_FOCUS = True
 VIEW = None
 STORED_SELECTION = []
+LAST_SEL = None;
 
 class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 	'''
@@ -16,76 +14,134 @@ class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 	'''
 
 	def description(self):
-		return "Listen for the next change in the selection and add that new selection to the current selection"
+		return "Listen for the next change in the selection and add that new selection to the current selection";
 
 	def is_enabled(self):
-		return not COMMAND_ACTIVE
+		global STATE;
+		return STATE == "inactive";
 
 
 	def run(self, reset=False):
-		global COMMAND_ACTIVE, VIEW, VIEW_HAS_FOCUS, STORED_SELECTION
-		view = self.window.active_view()
+		global STATE, VIEW, VIEW_HAS_FOCUS, STORED_SELECTION;
+		view = self.window.active_view();
 
 		if reset:
-			COMMAND_ACTIVE = False
-			VIEW = None
+			STATE = "inactive";
+			VIEW = None;
 			view.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
-			return
+			return;
 
-		COMMAND_ACTIVE = True
+		STATE = "active";
 		view.settings().set("extend_selection_active", True); #To allow contextual binding of "escape"
 		
-		VIEW = view
-		VIEW_HAS_FOCUS = True
+		VIEW = view;
+		VIEW_HAS_FOCUS = True;
 
-		STORED_SELECTION = []
+		STORED_SELECTION = [];
 		for r in view.sel():
-			STORED_SELECTION.append(r)
+			STORED_SELECTION.append(r);
 
-		VIEW.set_status("extend_selection_status", "Listening for changes in the selection")
+		VIEW.set_status("extend_selection_status", "Listening for changes in the selection");
+
 
 def complete():
-	global COMMAND_ACTIVE, VIEW, STORED_SELECTION
+	global STATE, VIEW, STORED_SELECTION;
 	
-	sel = VIEW.sel()
+	sel = VIEW.sel();
+
 
 	if (sel == STORED_SELECTION):
-		return False #should we actually finilze?
+		return False; #should we actually finish?
+
+
+	if (len(sel) == 1):
+		STATE = "standby";
+
+		global LAST_SEL;
+		LAST_SEL = sel[0];
+
+	else:
+		STATE = "inactive";
+
 
 	for r in STORED_SELECTION:
-		sel.add(r)
+		sel.add(r);
 
-	COMMAND_ACTIVE = False
 	VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
 
-	VIEW.erase_status("extend_selection_status")
-	sublime.status_message("Selection was extended")
+	VIEW.erase_status("extend_selection_status");
+	sublime.status_message("Selection was extended");
 
-	VIEW = None
-	#VIEW_HAS_FOCUS = True
+	if not STATE == "standby":
+		#Needs to be retained for use in STANDBY mode
+		VIEW = None;
+		STORED_SELECTION = []; 
+		#VIEW_HAS_FOCUS = True;
 
-	return True
+	return True;
+
+
 
 class SelectionChangeListener(sublime_plugin.EventListener):
 	def on_deactivated(self, view):
-		global VIEW, VIEW_HAS_FOCUS
+		global VIEW, VIEW_HAS_FOCUS;
 
 		if view == VIEW:
-			VIEW_HAS_FOCUS = False
-			VIEW.set_status("extend_selection_status", "Paused listening for selection changes")
+			VIEW_HAS_FOCUS = False;
+			VIEW.set_status("extend_selection_status", "Paused listening for selection changes");
 
 	def on_activated(self, view):
-		global VIEW, VIEW_HAS_FOCUS, STORED_SELECTION
+		global VIEW, VIEW_HAS_FOCUS, STORED_SELECTION;
 
 		if view == VIEW:
-			VIEW_HAS_FOCUS = True
-			VIEW.set_status("extend_selection_status", "Resumed listening for selection changes")
+			VIEW_HAS_FOCUS = True;
+			VIEW.set_status("extend_selection_status", "Resumed listening for selection changes");
 
-			complete() # (view.sel() != STORED_SELECTION) is checked inside
+			complete(); # (view.sel() != STORED_SELECTION) is checked inside
 
 	def on_selection_modified_async(self, view):
-		global COMMAND_ACTIVE, VIEW, VIEW_HAS_FOCUS
+		global STATE, VIEW, VIEW_HAS_FOCUS, LAST_SEL, STORED_SELECTION;
 
-		if COMMAND_ACTIVE and view == VIEW and VIEW_HAS_FOCUS:
-		   complete()
+		if STATE != "inactive" and view == VIEW and VIEW_HAS_FOCUS:
+			if STATE == "active":
+				complete();
+				return;
 
+			if STATE == "standby":
+				sel = view.sel();
+				s = sel[0];
+
+				if within1Move(s, LAST_SEL):
+					LAST_SEL = s; #update
+
+					for r in STORED_SELECTION:
+						sel.add(r);
+
+				else:
+					STATE = "inactive";
+					LAST_SEL = None;
+					STORED_SELECTION = [];
+					VIEW = None;
+
+
+def within1Move(s1, s2):
+	if s1.begin() == s2.begin() or s1.end() == s2.end():
+		return True;
+		
+	if d1(s1.begin(), s2.begin()) or d1(s1.end(), s2.end()):
+		return True;
+
+	global VIEW;
+
+	(s1y1,s1x1) = VIEW.rowcol(s1.begin());
+	(s1y2,s1x2) = VIEW.rowcol(s1.end());
+	(s2y1,s2x1) = VIEW.rowcol(s2.begin());
+	(s2y2,s2x2) = VIEW.rowcol(s2.end());
+
+	if (d1(s1y1, s2y1) or d1(s1y1, s2y2))  or  (d1(s1y2, s2y1) or d1(s1y2, s2y2)):
+		return True;
+
+	return False;
+
+def d1(i1, i2):
+	return (abs(i2 - i1) == 1);
