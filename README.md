@@ -41,13 +41,14 @@ Please beware of this and disable the feature if that behaviour is undesired.
 
 If you have the [PackageControl](http://wbond.net/sublime_packages/package_control) plugin installed, you can use that to install `EasyMotion`.
 
-Just type `cmd-shift-p` (`ctrl-shift-p` on win/linux) to bring up the command pallate then type `install` and pick `Package Control: Install Package` from the dropdown.
+Just type `cmd-shift-p` (`ctrl-shift-p` on win/linux) to bring up the command palette then type `install` and pick `Package Control: Install Package` from the dropdown.
 
 Then type `ExtendSelection` and choose the ExtendSelection plugin from the dropdown.  Hit `enter` and it will install.
 
 ### Manual Installation
 
-Manual installation should be as easy as cloning this git repository into your Sublime `Packages` directory. '(mind the version of sublime)'
+Manual installation should be as easy as cloning this git repository into your Sublime `Packages` directory.  
+*(mind the version of sublime)*
 
 On Windows:
 
