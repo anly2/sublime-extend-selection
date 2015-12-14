@@ -16,6 +16,18 @@ It will listen for the next change in the selection and append it to the previou
 
 For example, if I want to keep my current selection at `line 15, column 10` and add to it a caret at line 12, I would trigger the "Extend Selection" command (default <kbd>alt+shift+m</kbd>), then call "Goto line", type ":12" and press enter. That will move my caret to the beginning of line 12 but because I triggered "Extend Selection" beforehand, the new selection will be added to the previous one, rather than replacing it. So I will have a multi-selection at `line 12, column 0` and `line 15, column 10`.
 
+
+## Settings
+
+### Combine 'one-move' change events
+
+	"combine_onemove_events": false
+
+The plugin can optionally try to handle drag-selections (mouse dragging). This, however, is achieved by combining new selections that are within one move from the recently-made new selection. It does work, but it means that it will also combine on other occasions, such as when using the arrow keys.  
+
+Because of this, the setting is set to `false` by default. If you choose to enable it, simply set it to `true`.
+
+
 ## Installation
 
 ### Install via PackageControl
