@@ -53,8 +53,8 @@ def complete():
 	if (sel == STORED_SELECTION):
 		return False; #should we actually finish?
 
-
-	if (len(sel) == 1):
+	enabled_combine = VIEW.settings().get('combine_onemove_events');
+	if (enabled_combine and len(sel) == 1):
 		STATE = "standby";
 
 		global LAST_SEL;
