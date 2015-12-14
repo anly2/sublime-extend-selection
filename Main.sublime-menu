@@ -1,0 +1,93 @@
+[
+	{
+		"id": "selection",
+		"children": [
+			{
+				"id" : "extendSelectionCommand",
+				// "caption" : "Extend selection with next caret position",
+				// "caption" : "Add next caret position to selection",
+				"caption" : "Add next caret position",
+				"command" : "extend_selection"
+			}
+		]
+	},
+
+	{
+	    "id": "preferences",
+	    "children":
+	    [
+	        {
+	            "id": "package-settings",
+	            "children":
+	            [
+	                {
+	                    "caption": "Extend Selection",
+	                    "children":
+	                    [
+	                        // README
+	                        {
+	                            "caption": "View README",
+	                            "command": "open_file", "args": {"file": "${packages}/ExtendSelection/README.md"}
+	                        },
+
+	                        { "caption": "-" },
+
+	                        // Keybindings - Default
+	                        {
+	                            "caption": "Key Bindings – Default",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/ExtendSelection/Default (OSX).sublime-keymap",
+	                                "platform": "OSX"
+	                            }
+	                        },
+	                        {
+	                            "caption": "Key Bindings – Default",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/ExtendSelection/Default (Linux).sublime-keymap",
+	                                "platform": "Linux"
+	                            }
+	                        },
+	                        {
+	                            "caption": "Key Bindings – Default",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/ExtendSelection/Default (Windows).sublime-keymap",
+	                                "platform": "Windows"
+	                            }
+	                        },
+
+	                        // Keybindings - User
+	                        {
+	                            "caption": "Key Bindings – User",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/User/Default (OSX).sublime-keymap",
+	                                "platform": "OSX"
+	                            }
+	                        },
+	                        {
+	                            "caption": "Key Bindings – User",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/User/Default (Linux).sublime-keymap",
+	                                "platform": "Linux"
+	                            }
+	                        },
+	                        {
+	                            "caption": "Key Bindings – User",
+	                            "command": "open_file",
+	                            "args": {
+	                                "file": "${packages}/User/Default (Windows).sublime-keymap",
+	                                "platform": "Windows"
+	                            }
+	                        },
+	                        { "caption": "-" }
+	                    ]
+	                }
+	            ]
+	        }
+	    ]
+	}
+]
