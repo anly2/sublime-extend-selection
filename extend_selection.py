@@ -7,6 +7,27 @@ VIEW = None
 STORED_SELECTION = []
 LAST_SEL = None;
 
+SETTINGS_DEFAULT = {
+	"combine_onemove_events" : False
+}
+
+
+def plugin_loaded():
+	#load settings
+	globals()['user_settings'] = sublime.load_settings('Preferences.sublime-settings')
+	globals()['settings'] = sublime.load_settings('ExtendSelection.sublime-settings')
+	global SETTINGS_DEFAULT;
+
+	for setting, defaultValue in SETTINGS_DEFAULT.items():
+		value = settings.get(setting);
+		if value is None:
+			settings.set(setting, defaultValue);
+
+		value = user_settings.get(setting);
+		if value is not None:
+			settings.set(setting, value);
+
+
 class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 	'''
 	Listen for the next change in the selection and add the new region to the current selection,
@@ -53,7 +74,7 @@ def complete():
 	if (sel == STORED_SELECTION):
 		return False; #should we actually finish?
 
-	enabled_combine = VIEW.settings().get('combine_onemove_events');
+	enabled_combine = settings.get('combine_onemove_events');
 	if (enabled_combine and len(sel) == 1):
 		STATE = "standby";
 
