@@ -7,5 +7,5 @@
 	 * Stopped by default because of the side effect.
 	 * You can enable it if you really want drag-select to be handled by the plugin.
 	 */
-	"combine_onemove_events": false
+	"combine_onemove_events": true
 }
