@@ -27,10 +27,11 @@ The plugin by default tries to handle drag-selections (mouse dragging). This is 
 
 **Example of when this may be unwanted**
 
- >   selection at `row 10 column 2`
- >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)
- >   drag-select from `row 15 column 5` to `row 15 column 20`
- >   <kbd>shift+right</kbd> **This will add to the last selection, instead of doing <kbd>shift+right</kbd> for EVERY selection**
+ >   selection at `row 10 column 2`  
+ >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)  
+ >   drag-select from `row 15 column 5` to `row 15 column 20`  
+ >   <kbd>shift+right</kbd>  
+ >   **This will add to the last selection, instead of doing <kbd>shift+right</kbd> for EVERY selection**
 
 Please beware of this and disable the feature if that behaviour is undesired.
 
