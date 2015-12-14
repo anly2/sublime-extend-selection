@@ -1,0 +1,21 @@
+Version 1.1.1 of the ExtendSelection plugin
+
+This version adds a feature that combines 'selection events' in order to handle drag-selections.
+Previously, using the mouse to drag-select was not handled by the plugin. Now it is.
+However, you may consider the sideffect 'unwanted'.
+
+(as described in the README.md)
+
+**Example of possibly 'unwanted' behaviour**
+
+ >   selection at `row 10 column 2`  
+ >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)  
+ >   drag-select from `row 15 column 5` to `row 15 column 20`  
+ >   <kbd>shift+right</kbd>  
+ >   **This will add to the last selection, INSTEAD OF doing <kbd>shift+right</kbd> for EVERY selection**
+
+Please beware of this and disable the feature through the settings if that behaviour is undesired.
+
+Also, any feedback and bug reports are appreaciated.
+Open an issue ticket or write a comment on github:
+https://github.com/anly2/sublime-extend-selection
