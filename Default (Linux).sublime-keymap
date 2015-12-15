@@ -1,9 +1,0 @@
-[
-	{ "keys": ["alt+shift+m"], "command": "extend_selection"},
-
-	{ "keys": ["escape"], "command": "extend_selection", "args": {"reset": true},
-		"context": [
-			{ "key": "setting.extend_selection_active", "operator": "equal", "operand": true }
-		]
-	}
-]
