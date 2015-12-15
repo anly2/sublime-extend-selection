@@ -166,9 +166,9 @@ class SelectionChangeListener(sublime_plugin.EventListener):
 			complete(); # (view.sel() != STORED_SELECTION) is checked inside
 
 	def on_selection_modified_async(self, view):
-		global STATE, VIEW, VIEW_HAS_FOCUS, LAST_SEL, STORED_SELECTION, PENDING_TIMOUTS;
+		global STATE, VIEW, VIEW_HAS_FOCUS, LAST_SEL, STORED_SELECTION;
 
-		if view == VIEW and VIEW_HAS_FOCUS:
+		if STATE != "inactive" and view == VIEW and VIEW_HAS_FOCUS:
 			if STATE == "active":
 				complete();
 				return;
