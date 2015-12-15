@@ -83,9 +83,13 @@ Or you can copy the files manually into a folder `\Packages\ExtendSelection`, if
 
 # Versions
 
+##### [1.2.0] - released 15/12/15
+###### Added:
+- a feature named 'active_until_timeout' that delays the actual completion of the command for a specified time
+
 ##### [1.1.1] - released 14/12/15
 ###### Added:
-- a feature that handles drag-select
+- a feature named 'combine_onemove_events' that handles drag-selections
 
 ##### [1.0.0] - released 24/10/15
 Initial release with basic functionality.
