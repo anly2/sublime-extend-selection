@@ -1,0 +1,7 @@
+Version 1.2.0 of the ExtendSelection plugin
+
+This version adds a feature that allows the command to stay active even after the first handled selection.
+This is achieved by delaying the completion of the command for a specified amount of time. Each selection change refreshes the timeout.
+The timeout can be changed through the setting 'active_until_timeout'. By default it is set to 0 which effectively disables this new behaviour.
+
+If you believe this feature would be useful to you, enable it by setting 'active_until_timeout' to some number in milliseconds. Low delays (about 500ms) are recommended.
