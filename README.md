@@ -52,7 +52,7 @@ The setting specifies the time to delay the completion by. The value is in milli
  >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)  
  >   make a selection at `row 16 column 6`  
  >   within 0.5 second, make a selection at `row 17 column 7`  
- >   the actual selection is now multi-selection at `16:6` and `17:7`  
+ >   the actual selection is now multi-selection at `11:3` , `16:6` and `17:7`  
  >   wait 0.5 second, and the command completes  
 
 
