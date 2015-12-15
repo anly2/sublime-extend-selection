@@ -35,6 +35,28 @@ The plugin by default tries to handle drag-selections (mouse dragging). This is 
 
 Please beware of this and disable the feature if that behaviour is undesired.
 
+### Stay active until timeout expires
+
+    "active_until_timeout": 0 //ms
+
+The completion of the command can be delayed for a specified amount of time. This means that selection changes will continue to be handled by the command even after the first one, until the timeout expires. The timeout refreshes after each selection change, so if frequent enough changes are made all of them will be handled by the command.
+
+This is potentially confusing, even with a small timeout delay. Because of that, this feature is disabled by default.
+
+The setting specifies the time to delay the completion by. The value is in milliseconds. Negative values and zero effectively disable the behaviour.
+
+##### Example
+
+ >   "active_until_timeout" is set to 500  
+ >   selection at `row 11 column 3`  
+ >   trigger `ExtendSelection` (<kbd>alt+shift+m</kbd>)  
+ >   make a selection at `row 16 column 6`  
+ >   within 0.5 second, make a selection at `row 17 column 7`  
+ >   the actual selection is now multi-selection at `16:6` and `17:7`  
+ >   wait 0.5 second, and the command completes  
+
+
+
 
 ## Installation
 
