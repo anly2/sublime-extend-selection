@@ -8,7 +8,8 @@ STORED_SELECTION = []
 LAST_SEL = None;
 
 SETTINGS_DEFAULT = {
-	"combine_onemove_events" : False
+	"combine_onemove_events" : False,
+	"active_until_timeout" : 0
 }
 
 
@@ -85,8 +86,13 @@ def complete():
 		STATE = "inactive";
 
 
+	# The effect
+
 	for r in STORED_SELECTION:
 		sel.add(r);
+
+
+	# Clean up
 
 	VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
 
@@ -94,7 +100,7 @@ def complete():
 	sublime.status_message("Selection was extended");
 
 	if not STATE == "standby":
-		#Needs to be retained for use in STANDBY mode
+		# Need to be retained for use in STANDBY mode
 		VIEW = None;
 		STORED_SELECTION = []; 
 		#VIEW_HAS_FOCUS = True;

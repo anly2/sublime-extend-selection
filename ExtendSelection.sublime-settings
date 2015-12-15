@@ -4,8 +4,19 @@
 	 * This allows for drag-selections to be handled, but...
 	 * BUT it will also combine selection-change events triggered by the arrow keys!
 	 *
-	 * Stopped by default because of the side effect.
-	 * You can enable it if you really want drag-select to be handled by the plugin.
+	 * Beware of undesired "combination" of change events,
+	 * and disable the feature if it is bothersome.
 	 */
-	"combine_onemove_events": true
+	"combine_onemove_events": true,
+
+
+	/**
+	 * The command stays active for a certain time after the selection new selection is handled.
+	 * This setting specifies in milliseconds how much should the actual "completion" of the command be delayed.
+	 * Setting it to zero or a negative number effectively disables that behaviour.
+	 *
+	 * This feature is potentially very confusing.
+	 * Unless the user deliberately turns it on, it is better off disabled.
+	 */
+	"active_until_timeout": 0
 }
