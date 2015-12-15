@@ -6,6 +6,8 @@ VIEW_HAS_FOCUS = True
 VIEW = None
 STORED_SELECTION = []
 LAST_SEL = None;
+PENDING_TIMOUTS = 0;
+
 
 SETTINGS_DEFAULT = {
 	"combine_onemove_events" : False,
@@ -15,8 +17,8 @@ SETTINGS_DEFAULT = {
 
 def plugin_loaded():
 	#load settings
-	globals()['user_settings'] = sublime.load_settings('Preferences.sublime-settings')
-	globals()['settings'] = sublime.load_settings('ExtendSelection.sublime-settings')
+	globals()['user_settings'] = sublime.load_settings('Preferences.sublime-settings');
+	globals()['settings'] = sublime.load_settings('ExtendSelection.sublime-settings');
 	global SETTINGS_DEFAULT;
 
 	for setting, defaultValue in SETTINGS_DEFAULT.items():
@@ -75,6 +77,9 @@ def complete():
 	if (sel == STORED_SELECTION):
 		return False; #should we actually finish?
 
+
+	# Manage STATE
+
 	enabled_combine = settings.get('combine_onemove_events');
 	if (enabled_combine and len(sel) == 1):
 		STATE = "standby";
@@ -94,18 +99,52 @@ def complete():
 
 	# Clean up
 
-	VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
-
 	VIEW.erase_status("extend_selection_status");
 	sublime.status_message("Selection was extended");
 
-	if not STATE == "standby":
-		# Need to be retained for use in STANDBY mode
-		VIEW = None;
-		STORED_SELECTION = []; 
-		#VIEW_HAS_FOCUS = True;
+	if settings.get("active_until_timeout") > 0:
+		delayed_completion(settings.get("active_until_timeout"));
+		VIEW.set_status("extend_selection_status", "Listening for final selection changes...");
+	else:
+		VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
+
+		if not STATE == "standby":
+			print("normal clean");
+			# Need to be retained for use in STANDBY mode
+			VIEW = None;
+			STORED_SELECTION = []; 
+			#VIEW_HAS_FOCUS = True;
 
 	return True;
+
+
+def delayed_completion(delay):
+	global STATE, PENDING_TIMOUTS, STORED_SELECTION;
+
+	STATE = "active";
+	PENDING_TIMOUTS = PENDING_TIMOUTS + 1;
+
+
+	STORED_SELECTION = [];
+	for r in VIEW.sel():
+		STORED_SELECTION.append(r);
+
+	sublime.set_timeout(delayed_cleanup, delay);
+
+def delayed_cleanup():
+	global PENDING_TIMOUTS, VIEW;
+	PENDING_TIMOUTS = PENDING_TIMOUTS - 1;
+
+	if PENDING_TIMOUTS == 0:
+		VIEW.erase_status("extend_selection_status");
+		VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
+
+		if not STATE == "standby":
+			# Need to be retained for use in STANDBY mode
+			VIEW  = None;
+			STORED_SELECTION = [];
+			#VIEW_HAS_FOCUS = True;
+
 
 
 
@@ -127,9 +166,9 @@ class SelectionChangeListener(sublime_plugin.EventListener):
 			complete(); # (view.sel() != STORED_SELECTION) is checked inside
 
 	def on_selection_modified_async(self, view):
-		global STATE, VIEW, VIEW_HAS_FOCUS, LAST_SEL, STORED_SELECTION;
+		global STATE, VIEW, VIEW_HAS_FOCUS, LAST_SEL, STORED_SELECTION, PENDING_TIMOUTS;
 
-		if STATE != "inactive" and view == VIEW and VIEW_HAS_FOCUS:
+		if view == VIEW and VIEW_HAS_FOCUS:
 			if STATE == "active":
 				complete();
 				return;
@@ -149,8 +188,8 @@ class SelectionChangeListener(sublime_plugin.EventListener):
 				else:
 					STATE = "inactive";
 					LAST_SEL = None;
-					STORED_SELECTION = [];
 					VIEW = None;
+					STORED_SELECTION = [];
 
 
 def within1Move(s1, s2):
