@@ -45,15 +45,21 @@ class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 		return STATE == "inactive";
 
 
-	def run(self, reset=False):
-		global STATE, VIEW, VIEW_HAS_FOCUS, STORED_SELECTION;
+	def run(self, manual_completion=False, reset=False):
+		global STATE, VIEW, VIEW_HAS_FOCUS, STORED_SELECTION, PENDING_TIMOUTS;
 		view = self.window.active_view();
 
 		if reset:
+			if PENDING_TIMOUTS > 0 and not (settings.get("active_until_timeout") > 0):
+				complete();
+				PENDING_TIMOUTS = 0;
+
 			STATE = "inactive";
 			VIEW = None;
 			view.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
+
 			return;
+
 
 		STATE = "active";
 		view.settings().set("extend_selection_active", True); #To allow contextual binding of "escape"
@@ -69,7 +75,7 @@ class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 
 
 def complete():
-	global STATE, VIEW, STORED_SELECTION;
+	global STATE, VIEW, STORED_SELECTION, PENDING_TIMOUTS;
 	
 	sel = VIEW.sel();
 
@@ -98,6 +104,9 @@ def complete():
 
 
 	# Clean up
+
+	if PENDING_TIMOUTS > 0:
+		return True;
 
 	VIEW.erase_status("extend_selection_status");
 	sublime.status_message("Selection was extended");
