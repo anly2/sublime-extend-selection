@@ -41,8 +41,7 @@ class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 		return "Listen for the next change in the selection and add that new selection to the current selection";
 
 	def is_enabled(self):
-		global STATE;
-		return STATE == "inactive";
+		return True;
 
 
 	def run(self, manual_completion=False, reset=False):
@@ -63,6 +62,9 @@ class ExtendSelectionCommand(sublime_plugin.WindowCommand):
 
 		STATE = "active";
 		view.settings().set("extend_selection_active", True); #To allow contextual binding of "escape"
+
+		if manual_completion:
+			PENDING_TIMOUTS = 1;
 		
 		VIEW = view;
 		VIEW_HAS_FOCUS = True;
@@ -106,6 +108,11 @@ def complete():
 	# Clean up
 
 	if PENDING_TIMOUTS > 0:
+		STORED_SELECTION = [];
+		for r in sel:
+			STORED_SELECTION.append(r);
+
+		STATE = "active";
 		return True;
 
 	VIEW.erase_status("extend_selection_status");
