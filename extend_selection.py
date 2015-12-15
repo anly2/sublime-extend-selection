@@ -109,7 +109,6 @@ def complete():
 		VIEW.settings().set("extend_selection_active", False);  #To allow contextual binding of "escape"
 
 		if not STATE == "standby":
-			print("normal clean");
 			# Need to be retained for use in STANDBY mode
 			VIEW = None;
 			STORED_SELECTION = []; 
