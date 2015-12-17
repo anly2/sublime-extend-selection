@@ -16,6 +16,21 @@ It will listen for the next change in the selection and append it to the previou
 
 For example, if I want to keep my current selection at `line 15, column 10` and add to it a caret at line 12, I would trigger the "Extend Selection" command (default <kbd>alt+shift+m</kbd>), then call "Goto line", type ":12" and press enter. That will move my caret to the beginning of line 12 but because I triggered "Extend Selection" beforehand, the new selection will be added to the previous one, rather than replacing it. So I will have a multi-selection at `line 12, column 0` and `line 15, column 10`.
 
+### Manually completing "Extend Selection"
+
+You can also extend the current selection with multiple new selections. Trigger "Start extending the selection" which is bound to <kbd>ctrl+alt+m</kbd> by default. Then make as many selections as you want. They will all add to the current one rather than overriding it. When you are done making selections, complete the command by calling "Finish extending the selection", bound to <kbd>ctrl+alt+m</kbd> again (<kbd>Esc</kbd> would also work).
+
+You may also have a look at the "Stay active until timeout expires" setting described below.
+
+#### Example
+
+ >   selection at `row 9 column 5`  
+ >   trigger "Start extending the selection" (<kbd>ctrl+alt+m</kbd>)  
+ >   make selection at `row 10 column 0 to row 12 column 51`  
+ >   make selection at `row 0 column 0 to row 0 column 27`  
+ >   call "Finish extending the selection" (<kbd>ctrl+alt+m</kbd> again, or <kbd>Esc</kbd>)  
+ >   selection is now multi-selection at `9:5`, `10:0 to 12:51` and `0:0 to 0:27`  
+
 
 ## Settings
 
