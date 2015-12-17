@@ -1,0 +1,13 @@
+[
+    { "caption": "Extend selection", "command": "extend_selection" },
+    { "caption": "Start extending selection", "command": "extend_selection", "args": {"manual_completion": true},
+		"context": [
+			{ "key": "setting.extend_selection_active", "operator": "equal", "operand": false }
+		]
+	},
+    { "caption": "Complete extending selection", "command": "extend_selection", "args": {"reset": true},
+		"context": [
+			{ "key": "setting.extend_selection_active", "operator": "equal", "operand": true }
+		]
+	}
+]
