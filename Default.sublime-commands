@@ -5,7 +5,7 @@
 			{ "key": "setting.extend_selection_active", "operator": "equal", "operand": false }
 		]
 	},
-    { "caption": "Complete extending the selection", "command": "extend_selection", "args": {"reset": true},
+    { "caption": "Finish extending the selection", "command": "extend_selection", "args": {"reset": true},
 		"context": [
 			{ "key": "setting.extend_selection_active", "operator": "equal", "operand": true }
 		]
