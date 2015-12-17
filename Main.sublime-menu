@@ -35,7 +35,7 @@
 
 	                        // Plugin Settings - Default
 	                        {
-	                            "caption": "Settings – Defualt",
+	                            "caption": "Settings – Default",
 	                            "command": "open_file",
 	                            "args": {
 	                                "file": "${packages}/ExtendSelection/ExtendSelection.sublime-settings",
