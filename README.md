@@ -4,6 +4,11 @@ ExtendSelection is a [Sublime Text 2](http://www.sublimetext.com/2)[/3](http://w
 
 After triggering the "Extend Selection" command  (be it by using the key shortcuts, or the menu item in the "Selection" menu), you simply make a new selection and it will get added to the current one, instead of replacing it. You can make the new selection(s) in whatever way you would like - any method of navigation should be handled well.
 
+## Recommendation
+
+Before you continue, do consider the package [MultiEditUtils](https://packagecontrol.io/packages/MultiEditUtils). It offers a lot more and can be used to achieve the same functionality as this plugin's.
+
+
 ## Usage
 
 ### Add the next selection to the current one
